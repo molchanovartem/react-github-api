@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect} from 'react';
+import {createUseStyles} from 'react-jss'
+import {useSelector, useDispatch} from 'react-redux'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Card from "../components/Card";
+import {loadRepositories} from "../store/actions/repositoryActions";
+import {search} from "../store/actions/repositoryActions";
+import Search from "../components/Search";
+
+const useStyles = createUseStyles({
+    App: {},
+})
+
+const App = () => {
+    const classes = useStyles()
+    const repositories = useSelector(state => state.repository.repositories)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(loadRepositories())
+    }, [dispatch])
+
+    const onSearch = (text) => {
+        dispatch(search(text))
+    }
+
+    return (
+        <div className={classes.App}>
+
+            <h1>Github API</h1>
+
+            <Search onSearch={onSearch}/>
+
+            {repositories.map(repo =>
+                <Card key={repo.id}>
+                    {/* eslint-disable-next-line react/jsx-no-target-blank */}
+                    <a href={repo.html_url} target="_blank">
+                        {repo.name}
+                    </a>
+                </Card>
+            )}
+
+        </div>
+    );
 }
 
 export default App;

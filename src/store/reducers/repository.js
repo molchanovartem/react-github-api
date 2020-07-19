@@ -1,20 +1,16 @@
-import {LOAD_PROFILE_DATA} from "../types";
+import {LOAD_REPOSITORIES} from "../types";
 
 const initialState = {
-    name: '987456321',
-    appPass: '',
-    statistic: {},
-    startScreen: false,
+    repositories: [],
 }
 
-export const profileReducer = (state = initialState, action) => {
+export const repositoryReducer = (state = initialState, action) => {
     switch (action.type) {
-        case LOAD_PROFILE_DATA:
+        case LOAD_REPOSITORIES:
+            console.log(action.payload.repositories)
             return {
                 ...state,
-                name: action.payload.name,
-                appPass: action.payload.appPass,
-                statistic: action.payload.statistic,
+                repositories: action.payload.repositories,
             }
         default:
             return state

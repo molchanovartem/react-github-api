@@ -1,7 +1,7 @@
 import {LOAD_PROFILE_DATA} from "../types";
 
 const initialState = {
-    name: '',
+    name: '987456321',
     appPass: '',
     statistic: {},
     startScreen: false,
